@@ -46,14 +46,19 @@ Nothing in the MCP server knows whether it is the local or the remote side.
 
 ## Connecting an agent
 
-Each machine needs three things: the code, the current broker URL, and the
-shared token.
+You need a broker running somewhere first — one machine, one command, and it can
+be a laptop. [INSTALL.md](INSTALL.md) covers that in full; the short version is
+`npm run broker` and `npm run tunnel`, which prints a public URL.
+
+Once a broker exists, each agent machine needs three things: the code, that
+broker URL, and the shared token.
 
 ```bash
-git clone git@github.com:rockerritesh/tincan.git ~/tincan && cd ~/tincan && npm install
+git clone https://github.com/rockerritesh/tincan.git ~/tincan && cd ~/tincan && npm install
 ```
 
-Get the current URL (it changes whenever the tunnel restarts):
+If the broker is deployed on a server you manage, ask it for its current URL —
+it changes whenever the tunnel restarts:
 
 ```bash
 ./deploy/url.sh
