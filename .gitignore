@@ -5,3 +5,4 @@ pending/
 .env
 Conversation.md
 .tunnel-url
+.broker-token

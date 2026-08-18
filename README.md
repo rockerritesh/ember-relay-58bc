@@ -24,9 +24,34 @@ Machine 1 (Mac)                          Machine 2
 Nothing in the MCP server knows whether it is the local or the remote side.
 `AGENT_ID` and `BROKER_URL` are the only difference.
 
-## Quick start
+## Connecting an agent
 
-**On the machine hosting the broker (this Mac):**
+The broker is already running on `rnd-sumit-vm`. Each machine needs three
+things: the code, the current broker URL, and the shared token.
+
+```bash
+git clone <this repo> ~/agent-tunnel && cd ~/agent-tunnel && npm install
+```
+
+Get the current URL (it changes whenever the tunnel restarts):
+
+```bash
+./deploy/url.sh
+```
+
+Register the MCP server. **`AGENT_ID` is the per-machine name** — pick a
+different one on every machine; the token is the same everywhere.
+
+```bash
+claude mcp add agent-tunnel --env AGENT_ID=laptop --env BROKER_URL=https://<current>.trycloudflare.com --env BROKER_TOKEN=<shared-token> -- node ~/agent-tunnel/mcp/server.mjs
+```
+
+Confirm with `broker_health`, then `list_agents` — every agent that has made a
+call shows up there.
+
+### Running it locally instead
+
+To develop against a broker on your own machine rather than the VM:
 
 ```bash
 npm install && npm test
@@ -36,28 +61,12 @@ npm install && npm test
 npm run broker
 ```
 
-Then, in a second terminal, open the tunnel:
-
 ```bash
 npm run tunnel
 ```
 
-It prints a `https://<something>.trycloudflare.com` URL and saves it to
-`.tunnel-url`. That is the address the remote agent uses.
-
-**On the remote machine**, clone this repo, `npm install`, and register the MCP
-server with the tunnel URL:
-
-```bash
-claude mcp add agent-tunnel --env AGENT_ID=bob --env BROKER_URL=https://<your>.trycloudflare.com -- node /path/to/tunnel/mcp/server.mjs
-```
-
-The local agent uses the same command with `AGENT_ID=alice` and
-`BROKER_URL=http://127.0.0.1:8787`. A ready-made `.mcp.json` for the local side
-is already in this repo.
-
-**Confirm the link** from either agent by calling `broker_health`, then
-`list_agents` — both agents show up once each has made a call.
+`npm run tunnel` prints a public URL and saves it to `.tunnel-url`. A local
+broker starts with no token unless you set `BROKER_TOKEN` yourself.
 
 ## Running the monitor
 
@@ -148,16 +157,57 @@ crafted id cannot escape the data folder.
 
 ## Deploying to the GCP VM
 
-The broker is a single Node process over one folder, so moving it is copying a
-directory. On `rnd-sumit-vm` (`rnd-sumit-astha`, `us-central1-a`, IAP-only):
+Deployed and running on `rnd-sumit-vm` (`rnd-sumit-astha`, `us-central1-a`).
+The broker runs as a systemd service under a dedicated `agenttunnel` user,
+binding `127.0.0.1:8787` only; `cloudflared` dials *out* to Cloudflare, so no
+inbound firewall rule exists and the VM exposes no public port. Both units are
+enabled at boot.
 
-1. Request a JIT grant, then `gcp-cpu-up` and `gcp-cpu-ssh`.
-2. Clone the repo, `npm install`, `rsync` the existing `data/` folder over if
-   you want the history to come with it.
-3. Set `BROKER_TOKEN` before exposing it — the VM stays up unattended, so the
-   rotating-URL argument for staying open no longer applies.
-4. Run the broker under systemd and `cloudflared` as a named tunnel so the URL
-   stops changing on restart.
+Access to the VM is JIT, so start with a grant:
+
+```bash
+gcloud pam grants create --entitlement=project-developer --location=global --project=rnd-sumit-astha --requested-duration=14400s --justification="agent-tunnel deploy"
+```
+
+A fresh grant takes 60–90s to propagate; `4033: 'not authorized'` on the first
+SSH means wait and retry, not that something is broken.
+
+Then deploy or upgrade:
+
+```bash
+./deploy/push.sh
+```
+
+It uploads `server/` and `shared/`, installs Node 22 and `cloudflared` if
+missing, writes `/etc/agent-tunnel.env` (mode 640, `root:agenttunnel`), installs
+both systemd units, and prints the public URL. Re-run it to ship changes — the
+env file and the message folder are left alone.
+
+The shared secret lives at `~/.agent-tunnel/broker-token` on this Mac and is
+generated on first deploy. Every agent uses the same token; agents are told
+apart by `AGENT_ID`, not by credential.
+
+**On the VM:**
+
+| | |
+|---|---|
+| Code | `/opt/agent-tunnel` |
+| Message folder | `/var/lib/agent-tunnel` |
+| Secret | `/etc/agent-tunnel.env` |
+| Services | `agent-tunnel-broker`, `agent-tunnel-cloudflared` |
+| Current URL | `agent-tunnel-url` |
+
+```bash
+./deploy/url.sh
+```
+
+**The URL is not stable.** A quick tunnel picks a new hostname every time the
+cloudflared service restarts, which includes any VM reboot. When that happens,
+`./deploy/url.sh` and update `BROKER_URL` on each agent machine. To make it
+stable you need a named tunnel, which requires a Cloudflare account with a zone:
+run `cloudflared tunnel login` and `cloudflared tunnel create agent-tunnel` on
+the VM, then swap the `ExecStart` in `agent-tunnel-cloudflared.service` for
+`cloudflared tunnel run`.
 
 ## Tests
 

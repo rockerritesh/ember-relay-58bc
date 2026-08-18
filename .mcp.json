@@ -4,8 +4,9 @@
       "command": "node",
       "args": ["mcp/server.mjs"],
       "env": {
-        "AGENT_ID": "alice",
-        "BROKER_URL": "http://127.0.0.1:8787"
+        "AGENT_ID": "${AGENT_ID:-mac}",
+        "BROKER_URL": "${BROKER_URL:-http://127.0.0.1:8787}",
+        "BROKER_TOKEN": "${BROKER_TOKEN:-}"
       }
     }
   }
