@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1350" viewBox="0 0 2400 1350">
+  <defs>
+    <marker id="cu" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#E8933A"/>
+    </marker>
+    <marker id="te" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#37A8A0"/>
+    </marker>
+    <marker id="dg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#E5766E"/>
+    </marker>
+    <marker id="gy" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8A97A5"/>
+    </marker>
+  </defs>
+  <rect width="2400" height="1350" fill="#0E1319"/>
+  <text x="110" y="168" font-family="Menlo, monospace" font-size="60" font-weight="700" fill="#E8EDF2">Handing over a file</text>
+  <text x="110" y="224" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="34" fill="#97A3B0">nothing crosses the wire until they say yes</text>
+  <text x="2290" y="150" text-anchor="end" font-family="Menlo, monospace" font-size="34" font-weight="700" fill="#E8933A">tincan</text>
+  <text x="2290" y="192" text-anchor="end" font-family="Menlo, monospace" font-size="24" fill="#6B7885">github.com/rockerritesh/tincan</text>
+  <line x1="110" y1="272" x2="2290" y2="272" stroke="#2C3742" stroke-width="2"/>
+  <rect x="170" y="320" width="520" height="100" rx="6" fill="#151C24" stroke="#2C3742" stroke-width="3"/>
+  <text x="430" y="384" text-anchor="middle" font-family="Menlo, monospace" font-size="38" font-weight="700" fill="#E8EDF2">your agent</text>
+  <line x1="430" y1="420" x2="430" y2="1250" stroke="#2C3742" stroke-width="3" stroke-dasharray="8 12"/>
+  <rect x="940" y="320" width="520" height="100" rx="6" fill="#151C24" stroke="#2C3742" stroke-width="3"/>
+  <text x="1200" y="384" text-anchor="middle" font-family="Menlo, monospace" font-size="38" font-weight="700" fill="#E8EDF2">broker</text>
+  <line x1="1200" y1="420" x2="1200" y2="1250" stroke="#2C3742" stroke-width="3" stroke-dasharray="8 12"/>
+  <rect x="1710" y="320" width="520" height="100" rx="6" fill="#151C24" stroke="#2C3742" stroke-width="3"/>
+  <text x="1970" y="384" text-anchor="middle" font-family="Menlo, monospace" font-size="38" font-weight="700" fill="#E8EDF2">their agent</text>
+  <line x1="1970" y1="420" x2="1970" y2="1250" stroke="#2C3742" stroke-width="3" stroke-dasharray="8 12"/>
+  <rect x="106" y="452" width="48" height="480" rx="5" fill="#2A2015" stroke="#E8933A" stroke-width="3"/>
+  <text x="130" y="692" text-anchor="middle" font-family="Menlo, monospace" font-size="24" font-weight="700" fill="#E8933A" transform="rotate(-90 130 692)">BYTES STILL LOCAL</text>
+  <text x="230" y="500" text-anchor="start" font-family="Menlo, monospace" font-size="28" fill="#E8933A" font-weight="700">1 &#183; send_message (260 KB)</text>
+  <rect x="220" y="520" width="420" height="64" rx="5" fill="#2A2015" stroke="#E8933A" stroke-width="3"/>
+  <text x="430" y="563" text-anchor="middle" font-family="Menlo, monospace" font-size="27" font-weight="700" fill="#E8933A">STASHED LOCALLY</text>
+  <path d="M430,664 L1180,664" stroke="#37A8A0" stroke-width="5" fill="none" marker-end="url(#te)" stroke-dasharray="10 8"/>
+  <text x="440" y="636" text-anchor="start" font-family="Menlo, monospace" font-size="28" fill="#37A8A0" font-weight="700">2 &#183; offer</text>
+  <text x="1170" y="636" text-anchor="end" font-family="Menlo, monospace" font-size="26" fill="#8A97A5">subject + size only</text>
+  <path d="M1970,774 L1220,774" stroke="#37A8A0" stroke-width="5" fill="none" marker-end="url(#te)" stroke-dasharray="10 8"/>
+  <text x="1960" y="746" text-anchor="end" font-family="Menlo, monospace" font-size="28" fill="#37A8A0" font-weight="700">3 &#183; check_inbox &#8594; offer waiting</text>
+  <path d="M1970,884 L1220,884" stroke="#37A8A0" stroke-width="5" fill="none" marker-end="url(#te)" stroke-dasharray="10 8"/>
+  <text x="1960" y="856" text-anchor="end" font-family="Menlo, monospace" font-size="28" fill="#37A8A0" font-weight="700">4 &#183; respond_offer &#183; accept</text>
+  <line x1="110" y1="1000" x2="2290" y2="1000" stroke="#E8933A" stroke-width="3" stroke-dasharray="6 14"/>
+  <rect x="840" y="938" width="720" height="62" rx="5" fill="#0E1319" stroke="#E8933A" stroke-width="3"/>
+  <text x="1200" y="980" text-anchor="middle" font-family="Menlo, monospace" font-size="29" font-weight="700" fill="#E8933A">FIRST BYTE CROSSES HERE</text>
+  <path d="M430,1082 L1180,1082" stroke="#E8933A" stroke-width="10" fill="none" marker-end="url(#cu)"/>
+  <text x="440" y="1054" text-anchor="start" font-family="Menlo, monospace" font-size="28" fill="#E8933A" font-weight="700">5 &#183; check_inbox uploads</text>
+  <text x="1170" y="1054" text-anchor="end" font-family="Menlo, monospace" font-size="26" fill="#E8933A">PUT payload &#183; 260 KB</text>
+  <path d="M1200,1196 L1960,1196" stroke="#E8933A" stroke-width="5" fill="none" marker-end="url(#cu)"/>
+  <text x="1580" y="1168" text-anchor="middle" font-family="Menlo, monospace" font-size="28" fill="#E8933A" font-weight="700">6 &#183; fetch_payload &#8594; 260 KB, sha256 verified</text>
+  <text x="110" y="1315" text-anchor="start" font-family="Menlo, monospace" font-size="30" fill="#E5766E" font-weight="700">they reject instead? the file never leaves your machine.</text>
+</svg>

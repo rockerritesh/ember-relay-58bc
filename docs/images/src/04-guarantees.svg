@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1350" viewBox="0 0 2400 1350">
+  <defs>
+    <marker id="cu" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#E8933A"/>
+    </marker>
+    <marker id="te" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#37A8A0"/>
+    </marker>
+    <marker id="dg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#E5766E"/>
+    </marker>
+    <marker id="gy" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8A97A5"/>
+    </marker>
+  </defs>
+  <rect width="2400" height="1350" fill="#0E1319"/>
+  <text x="110" y="168" font-family="Menlo, monospace" font-size="60" font-weight="700" fill="#E8EDF2">Guarantees</text>
+  <text x="110" y="224" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="34" fill="#97A3B0">two state machines, both forward-only &#183; nothing is ever deleted</text>
+  <text x="2290" y="150" text-anchor="end" font-family="Menlo, monospace" font-size="34" font-weight="700" fill="#E8933A">tincan</text>
+  <text x="2290" y="192" text-anchor="end" font-family="Menlo, monospace" font-size="24" fill="#6B7885">github.com/rockerritesh/tincan</text>
+  <line x1="110" y1="272" x2="2290" y2="272" stroke="#2C3742" stroke-width="2"/>
+  <text x="110" y="396" text-anchor="start" font-family="Menlo, monospace" font-size="26" fill="#E8933A" font-weight="700">A MESSAGE</text>
+  <rect x="180" y="430" width="340" height="100" rx="6" fill="#1B242E" stroke="#2C3742" stroke-width="3"/>
+  <text x="350" y="492" text-anchor="middle" font-family="Menlo, monospace" font-size="36" font-weight="700" fill="#E8EDF2">queued</text>
+  <rect x="700" y="430" width="340" height="100" rx="6" fill="#1B242E" stroke="#2C3742" stroke-width="3"/>
+  <text x="870" y="492" text-anchor="middle" font-family="Menlo, monospace" font-size="36" font-weight="700" fill="#E8EDF2">delivered</text>
+  <rect x="1220" y="430" width="340" height="100" rx="6" fill="#1B242E" stroke="#37A8A0" stroke-width="3"/>
+  <text x="1390" y="492" text-anchor="middle" font-family="Menlo, monospace" font-size="36" font-weight="700" fill="#37A8A0">read</text>
+  <path d="M520,480 L692,480" stroke="#8A97A5" stroke-width="4" fill="none" marker-end="url(#gy)"/>
+  <text x="606" y="452" text-anchor="middle" font-family="Menlo, monospace" font-size="25" fill="#8A97A5">fetched</text>
+  <path d="M1040,480 L1212,480" stroke="#8A97A5" stroke-width="4" fill="none" marker-end="url(#gy)"/>
+  <text x="1126" y="452" text-anchor="middle" font-family="Menlo, monospace" font-size="25" fill="#8A97A5">acked</text>
+  <path d="M870,530 L870,620 L350,620 L350,538" stroke="#E8933A" stroke-width="4" fill="none" stroke-dasharray="10 8" marker-end="url(#cu)"/>
+  <text x="1000" y="632" text-anchor="start" font-family="Menlo, monospace" font-size="28" fill="#E8933A" font-weight="700">not acked &#8594; redelivered on the next tick</text>
+  <text x="110" y="826" text-anchor="start" font-family="Menlo, monospace" font-size="26" fill="#37A8A0" font-weight="700">A FILE OFFER</text>
+  <rect x="180" y="860" width="340" height="100" rx="6" fill="#1B242E" stroke="#2C3742" stroke-width="3"/>
+  <text x="350" y="922" text-anchor="middle" font-family="Menlo, monospace" font-size="36" font-weight="700" fill="#E8EDF2">pending</text>
+  <rect x="700" y="860" width="340" height="100" rx="6" fill="#1B242E" stroke="#2C3742" stroke-width="3"/>
+  <text x="870" y="922" text-anchor="middle" font-family="Menlo, monospace" font-size="36" font-weight="700" fill="#E8EDF2">accepted</text>
+  <rect x="1220" y="860" width="340" height="100" rx="6" fill="#1B242E" stroke="#E8933A" stroke-width="3"/>
+  <text x="1390" y="922" text-anchor="middle" font-family="Menlo, monospace" font-size="36" font-weight="700" fill="#E8933A">uploaded</text>
+  <rect x="1740" y="860" width="340" height="100" rx="6" fill="#1B242E" stroke="#E5766E" stroke-width="3"/>
+  <text x="1910" y="922" text-anchor="middle" font-family="Menlo, monospace" font-size="36" font-weight="700" fill="#E5766E">rejected</text>
+  <path d="M520,910 L692,910" stroke="#8A97A5" stroke-width="4" fill="none" marker-end="url(#gy)"/>
+  <text x="606" y="882" text-anchor="middle" font-family="Menlo, monospace" font-size="25" fill="#8A97A5">accept</text>
+  <path d="M1040,910 L1212,910" stroke="#8A97A5" stroke-width="4" fill="none" marker-end="url(#gy)"/>
+  <text x="1126" y="882" text-anchor="middle" font-family="Menlo, monospace" font-size="25" fill="#8A97A5">upload</text>
+  <path d="M350,960 L350,1050 L1910,1050 L1910,968" stroke="#E5766E" stroke-width="4" fill="none" marker-end="url(#dg)"/>
+  <text x="700" y="1096" text-anchor="start" font-family="Menlo, monospace" font-size="28" fill="#E5766E" font-weight="700">reject &#8212; local copy deleted, nothing ever transferred</text>
+  <text x="110" y="1250" text-anchor="start" font-family="Menlo, monospace" font-size="32" fill="#37A8A0" font-weight="700">message an agent that isn&#8217;t online yet &#8212; it lands the moment they connect</text>
+  <text x="110" y="1310" text-anchor="start" font-family="Menlo, monospace" font-size="30" fill="#97A3B0">every event above is one line in an append-only thread log. no context lost.</text>
+</svg>

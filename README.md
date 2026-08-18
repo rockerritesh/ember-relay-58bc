@@ -20,29 +20,10 @@ you own.
 
 **New here? See [INSTALL.md](INSTALL.md).**
 
-```
-   your machine                              their machine
-┌────────────────────┐                    ┌────────────────────┐
-│ your agent         │                    │ their agent        │
-│   └ tincan MCP ──┐ │                    │ ┌── tincan MCP     │
-└──────────────────│─┘                    └─│──────────────────┘
-                   │ https                    │ https
-                   ▼                          ▼
-              ┌─────────────────────────────────────┐
-              │        Cloudflare edge              │
-              └──────────────────▲──────────────────┘
-                                 │ dials OUT — no inbound port
-              ┌──────────────────┴──────────────────┐
-              │ broker host                         │
-              │   cloudflared → broker :8787        │
-              │                      └→ message folder
-              └─────────────────────────────────────┘
-```
+![tincan architecture — two machines, one broker, and a tunnel that dials out](docs/images/01-architecture.png)
 
 Nothing in the MCP server knows whether it is the local or the remote side.
 `AGENT_ID` and `BROKER_URL` are the only difference.
-
-**Setting this up from scratch? See [INSTALL.md](INSTALL.md).**
 
 ## Connecting an agent
 
@@ -76,7 +57,7 @@ call shows up there.
 
 ### Running it locally instead
 
-To develop against a broker on your own machine rather than the VM:
+To run a broker on your own machine instead of a remote one:
 
 ```bash
 npm install && npm test
@@ -123,10 +104,14 @@ that have since been answered. When there is nothing to do it returns
 
 ## How a message moves
 
+![send, deliver, read — the receipt the sender can watch](docs/images/02-message-flow.png)
+
 **Under 64KB** — `send_message` posts it, the broker appends to the thread log
 and drops an entry in the recipient's inbox folder. The recipient's next
 `check_inbox` flips it to `delivered` and returns it; `ack_message` flips it to
 `read`. The sender watches all three states with `message_status`.
+
+![the offer handshake — nothing crosses until the recipient accepts](docs/images/03-file-handoff.png)
 
 **Over 64KB** — the size decides, not the agent. `send_message` holds the bytes
 on the sender's own disk (`~/.agent-tunnel/outbox/<agent>/`) and posts an offer
@@ -138,6 +123,11 @@ wire.
 
 Delivery is at-least-once: an unacked message reappears on every tick, so a
 crash between fetch and ack redelivers rather than loses.
+
+![message and offer state machines, both forward-only](docs/images/04-guarantees.png)
+
+Diagrams are generated from the SVG sources in [docs/images/src/](docs/images/src/) —
+edit those and re-render with `rsvg-convert -w 2400 -h 1350 in.svg -o out.png`.
 
 ## The folder
 
@@ -162,18 +152,24 @@ tail -f data/threads/*.jsonl
 
 ## Security posture
 
-The broker is currently **open** — no token. The tunnel URL is the only thing
-keeping strangers out, and it rotates on every restart. Treat it as a secret and
-do not paste it anywhere public.
-
-Turning on auth is one env var; it is already wired through every route:
+**A broker started without `BROKER_TOKEN` is open** — anyone who learns the
+tunnel URL can read and write your agents' messages. That is fine for a minute
+of local testing on a URL that rotates every restart, and not fine for anything
+left running. Set the token:
 
 ```bash
 BROKER_TOKEN=$(openssl rand -hex 32) npm run broker
 ```
 
-Both MCP servers then need the same `BROKER_TOKEN` in their environment.
-`/v1/health` stays open on purpose so the tunnel can be smoke-tested.
+Every route then requires `Authorization: Bearer <token>`, and every agent needs
+the same value in its environment. `/v1/health` stays open on purpose so the
+tunnel can be smoke-tested. `deploy/install.sh` always writes a token, so a
+deployed broker is closed by default.
+
+One shared token means agents are distinguished by `AGENT_ID`, not by credential:
+any holder of the token can claim any agent name. That is a reasonable trade
+among machines you own, and the thing to change first if the token ever spreads
+wider — per-agent tokens are a small change to the same middleware.
 
 The broker binds `127.0.0.1` and is never exposed directly; `cloudflared` is the
 only path in. Agent and thread ids are validated against

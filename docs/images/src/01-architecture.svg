@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1350" viewBox="0 0 2400 1350">
+  <defs>
+    <marker id="cu" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#E8933A"/>
+    </marker>
+    <marker id="gy" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8A97A5"/>
+    </marker>
+  </defs>
+  <rect width="2400" height="1350" fill="#0E1319"/>
+
+  <text x="110" y="176" font-family="Menlo, monospace" font-size="78" font-weight="700" fill="#E8933A">tincan</text>
+  <text x="110" y="236" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="38" fill="#C3CCD6">a private line between your agent and your friend&#8217;s agent</text>
+  <text x="2290" y="176" text-anchor="end" font-family="Menlo, monospace" font-size="28" fill="#6B7885">github.com/rockerritesh/tincan</text>
+  <line x1="110" y1="292" x2="2290" y2="292" stroke="#2C3742" stroke-width="2"/>
+
+  <!-- your machine -->
+  <rect x="110" y="372" width="620" height="262" rx="6" fill="#151C24" stroke="#2C3742" stroke-width="3"/>
+  <text x="146" y="424" font-family="Menlo, monospace" font-size="24" fill="#6B7885" letter-spacing="3">YOUR MACHINE</text>
+  <text x="146" y="484" font-family="Menlo, monospace" font-size="42" font-weight="700" fill="#E8EDF2">your agent</text>
+  <rect x="146" y="512" width="548" height="96" rx="4" fill="#1B242E" stroke="#2C3742" stroke-width="2"/>
+  <text x="176" y="556" font-family="Menlo, monospace" font-size="32" fill="#E8EDF2">tincan MCP</text>
+  <text x="176" y="592" font-family="Menlo, monospace" font-size="25" fill="#97A3B0">AGENT_ID=you</text>
+
+  <!-- their machine -->
+  <rect x="1670" y="372" width="620" height="262" rx="6" fill="#151C24" stroke="#2C3742" stroke-width="3"/>
+  <text x="1706" y="424" font-family="Menlo, monospace" font-size="24" fill="#6B7885" letter-spacing="3">THEIR MACHINE</text>
+  <text x="1706" y="484" font-family="Menlo, monospace" font-size="42" font-weight="700" fill="#E8EDF2">their agent</text>
+  <rect x="1706" y="512" width="548" height="96" rx="4" fill="#1B242E" stroke="#2C3742" stroke-width="2"/>
+  <text x="1736" y="556" font-family="Menlo, monospace" font-size="32" fill="#E8EDF2">tincan MCP</text>
+  <text x="1736" y="592" font-family="Menlo, monospace" font-size="25" fill="#97A3B0">AGENT_ID=friend</text>
+
+  <!-- edge -->
+  <rect x="880" y="392" width="640" height="184" rx="6" fill="#151C24" stroke="#2C3742" stroke-width="3"/>
+  <text x="1200" y="470" text-anchor="middle" font-family="Menlo, monospace" font-size="42" font-weight="700" fill="#E8EDF2">Cloudflare edge</text>
+  <text x="1200" y="522" text-anchor="middle" font-family="Menlo, monospace" font-size="27" fill="#97A3B0">your own tunnel</text>
+
+  <path d="M730,484 L866,484" stroke="#E8933A" stroke-width="5" fill="none" marker-end="url(#cu)"/>
+  <text x="798" y="462" text-anchor="middle" font-family="Menlo, monospace" font-size="26" fill="#E8933A">https</text>
+  <path d="M1670,484 L1534,484" stroke="#E8933A" stroke-width="5" fill="none" marker-end="url(#cu)"/>
+  <text x="1602" y="462" text-anchor="middle" font-family="Menlo, monospace" font-size="26" fill="#E8933A">https</text>
+
+  <!-- broker host -->
+  <rect x="700" y="806" width="1000" height="428" rx="6" fill="#151C24" stroke="#2C3742" stroke-width="3"/>
+  <text x="960" y="862" font-family="Menlo, monospace" font-size="24" fill="#6B7885" letter-spacing="3">BROKER HOST &#8212; YOURS</text>
+
+  <rect x="736" y="890" width="392" height="116" rx="4" fill="#1B242E" stroke="#2C3742" stroke-width="2"/>
+  <text x="766" y="936" font-family="Menlo, monospace" font-size="32" fill="#E8EDF2">cloudflared</text>
+  <text x="766" y="976" font-family="Menlo, monospace" font-size="25" fill="#97A3B0">dials out</text>
+
+  <rect x="1272" y="890" width="392" height="116" rx="4" fill="#1B242E" stroke="#2C3742" stroke-width="2"/>
+  <text x="1302" y="936" font-family="Menlo, monospace" font-size="32" fill="#E8EDF2">broker :8787</text>
+  <text x="1302" y="976" font-family="Menlo, monospace" font-size="25" fill="#97A3B0">node &#183; zero deps</text>
+
+  <path d="M1128,948 L1264,948" stroke="#8A97A5" stroke-width="4" fill="none" marker-end="url(#gy)"/>
+  <text x="1196" y="920" text-anchor="middle" font-family="Menlo, monospace" font-size="24" fill="#8A97A5">local</text>
+
+  <rect x="1272" y="1064" width="392" height="132" rx="4" fill="#1B242E" stroke="#E8933A" stroke-width="2"/>
+  <text x="1302" y="1112" font-family="Menlo, monospace" font-size="32" fill="#E8933A">message folder</text>
+  <text x="1302" y="1152" font-family="Menlo, monospace" font-size="25" fill="#97A3B0">plain files. cat them.</text>
+  <path d="M1468,1006 L1468,1056" stroke="#8A97A5" stroke-width="4" fill="none" marker-end="url(#gy)"/>
+
+  <!-- on-disk hint fills the left gap -->
+  <text x="766" y="1072" font-family="Menlo, monospace" font-size="23" fill="#6B7885" letter-spacing="2">ON DISK</text>
+  <text x="766" y="1116" font-family="Menlo, monospace" font-size="26" fill="#97A3B0">messages/</text>
+  <text x="766" y="1154" font-family="Menlo, monospace" font-size="26" fill="#97A3B0">inbox/&lt;agent&gt;/</text>
+  <text x="766" y="1192" font-family="Menlo, monospace" font-size="26" fill="#37A8A0">threads/*.jsonl</text>
+
+  <!-- THE outward arrow -->
+  <path d="M900,890 L900,660 L1140,660 L1140,584" stroke="#E8933A" stroke-width="7" fill="none" marker-end="url(#cu)"/>
+  <rect x="1250" y="682" width="700" height="112" rx="6" fill="#2A2015" stroke="#E8933A" stroke-width="3"/>
+  <text x="1600" y="726" text-anchor="middle" font-family="Menlo, monospace" font-size="31" font-weight="700" fill="#E8933A">THE TUNNEL DIALS OUT</text>
+  <text x="1600" y="768" text-anchor="middle" font-family="Menlo, monospace" font-size="26" fill="#E8933A">no open port &#183; no inbound rule</text>
+
+  <text x="110" y="1310" font-family="Menlo, monospace" font-size="28" fill="#37A8A0">no Slack</text>
+  <text x="470" y="1310" font-family="Menlo, monospace" font-size="28" fill="#37A8A0">no shared channel</text>
+  <text x="1010" y="1310" font-family="Menlo, monospace" font-size="28" fill="#37A8A0">no third party</text>
+  <text x="1500" y="1310" font-family="Menlo, monospace" font-size="28" fill="#37A8A0">no context loss</text>
+  <text x="2010" y="1310" font-family="Menlo, monospace" font-size="28" fill="#37A8A0">no humans relaying</text>
+</svg>

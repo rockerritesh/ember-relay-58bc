@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1350" viewBox="0 0 2400 1350">
+  <defs>
+    <marker id="cu" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#E8933A"/>
+    </marker>
+    <marker id="te" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#37A8A0"/>
+    </marker>
+    <marker id="dg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#E5766E"/>
+    </marker>
+    <marker id="gy" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8A97A5"/>
+    </marker>
+  </defs>
+  <rect width="2400" height="1350" fill="#0E1319"/>
+  <text x="110" y="168" font-family="Menlo, monospace" font-size="60" font-weight="700" fill="#E8EDF2">How a message moves</text>
+  <text x="110" y="224" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="34" fill="#97A3B0">three calls &#183; three states &#183; a read receipt the sender can watch</text>
+  <text x="2290" y="150" text-anchor="end" font-family="Menlo, monospace" font-size="34" font-weight="700" fill="#E8933A">tincan</text>
+  <text x="2290" y="192" text-anchor="end" font-family="Menlo, monospace" font-size="24" fill="#6B7885">github.com/rockerritesh/tincan</text>
+  <line x1="110" y1="272" x2="2290" y2="272" stroke="#2C3742" stroke-width="2"/>
+  <rect x="170" y="320" width="520" height="100" rx="6" fill="#151C24" stroke="#2C3742" stroke-width="3"/>
+  <text x="430" y="384" text-anchor="middle" font-family="Menlo, monospace" font-size="38" font-weight="700" fill="#E8EDF2">your agent</text>
+  <line x1="430" y1="420" x2="430" y2="1250" stroke="#2C3742" stroke-width="3" stroke-dasharray="8 12"/>
+  <rect x="940" y="320" width="520" height="100" rx="6" fill="#151C24" stroke="#2C3742" stroke-width="3"/>
+  <text x="1200" y="384" text-anchor="middle" font-family="Menlo, monospace" font-size="38" font-weight="700" fill="#E8EDF2">broker</text>
+  <line x1="1200" y1="420" x2="1200" y2="1250" stroke="#2C3742" stroke-width="3" stroke-dasharray="8 12"/>
+  <rect x="1710" y="320" width="520" height="100" rx="6" fill="#151C24" stroke="#2C3742" stroke-width="3"/>
+  <text x="1970" y="384" text-anchor="middle" font-family="Menlo, monospace" font-size="38" font-weight="700" fill="#E8EDF2">their agent</text>
+  <line x1="1970" y1="420" x2="1970" y2="1250" stroke="#2C3742" stroke-width="3" stroke-dasharray="8 12"/>
+  <path d="M430,540 L1180,540" stroke="#E8933A" stroke-width="5" fill="none" marker-end="url(#cu)"/>
+  <text x="440" y="512" text-anchor="start" font-family="Menlo, monospace" font-size="28" fill="#E8933A" font-weight="700">1 &#183; send_message</text>
+  <text x="1170" y="512" text-anchor="end" font-family="Menlo, monospace" font-size="26" fill="#8A97A5">POST /v1/messages</text>
+  <rect x="1000" y="566" width="400" height="64" rx="5" fill="#2A2015" stroke="#E8933A" stroke-width="3"/>
+  <text x="1200" y="609" text-anchor="middle" font-family="Menlo, monospace" font-size="30" font-weight="700" fill="#E8933A">QUEUED</text>
+  <path d="M1970,700 L1220,700" stroke="#37A8A0" stroke-width="5" fill="none" marker-end="url(#te)" stroke-dasharray="10 8"/>
+  <text x="1960" y="672" text-anchor="end" font-family="Menlo, monospace" font-size="28" fill="#37A8A0" font-weight="700">2 &#183; check_inbox</text>
+  <text x="1240" y="672" text-anchor="start" font-family="Menlo, monospace" font-size="26" fill="#8A97A5">GET /v1/inbox</text>
+  <rect x="1000" y="726" width="400" height="64" rx="5" fill="#12262A" stroke="#37A8A0" stroke-width="3"/>
+  <text x="1200" y="769" text-anchor="middle" font-family="Menlo, monospace" font-size="30" font-weight="700" fill="#37A8A0">DELIVERED</text>
+  <path d="M1200,862 L1960,862" stroke="#E8933A" stroke-width="5" fill="none" marker-end="url(#cu)"/>
+  <text x="1580" y="834" text-anchor="middle" font-family="Menlo, monospace" font-size="27" fill="#E8933A" font-weight="700">message body, inline</text>
+  <path d="M1970,992 L1220,992" stroke="#37A8A0" stroke-width="5" fill="none" marker-end="url(#te)" stroke-dasharray="10 8"/>
+  <text x="1960" y="964" text-anchor="end" font-family="Menlo, monospace" font-size="28" fill="#37A8A0" font-weight="700">3 &#183; ack_message</text>
+  <rect x="1000" y="1018" width="400" height="64" rx="5" fill="#12262A" stroke="#37A8A0" stroke-width="3"/>
+  <text x="1200" y="1061" text-anchor="middle" font-family="Menlo, monospace" font-size="30" font-weight="700" fill="#37A8A0">READ</text>
+  <path d="M430,1170 L1180,1170" stroke="#37A8A0" stroke-width="5" fill="none" marker-end="url(#te)" stroke-dasharray="10 8"/>
+  <text x="440" y="1142" text-anchor="start" font-family="Menlo, monospace" font-size="28" fill="#37A8A0" font-weight="700">4 &#183; message_status &#8594; read</text>
+  <text x="110" y="1315" text-anchor="start" font-family="Menlo, monospace" font-size="30" fill="#E8933A" font-weight="700">skip the ack and it comes back on the next tick &#8212; delivery is at-least-once</text>
+</svg>
