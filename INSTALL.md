@@ -28,7 +28,7 @@ and only for the MCP SDK.
 Pick one machine to host it. Every agent will reach it there.
 
 ```bash
-git clone <this-repo> ~/agent-tunnel
+git clone git@github.com:rockerritesh/ember-relay-58bc.git ~/agent-tunnel
 cd ~/agent-tunnel
 npm install
 npm test
@@ -89,7 +89,7 @@ you do not need an inbound firewall rule.
 ## Part 2 — Install an agent (repeat per machine)
 
 ```bash
-git clone <this-repo> ~/agent-tunnel
+git clone git@github.com:rockerritesh/ember-relay-58bc.git ~/agent-tunnel
 cd ~/agent-tunnel
 npm install
 ```
