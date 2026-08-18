@@ -24,6 +24,8 @@ Machine 1 (Mac)                          Machine 2
 Nothing in the MCP server knows whether it is the local or the remote side.
 `AGENT_ID` and `BROKER_URL` are the only difference.
 
+**Setting this up from scratch? See [INSTALL.md](INSTALL.md).**
+
 ## Connecting an agent
 
 The broker is already running on `rnd-sumit-vm`. Each machine needs three
