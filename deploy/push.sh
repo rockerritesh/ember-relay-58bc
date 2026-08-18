@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Ship the broker to rnd-sumit-vm and (re)start it. Idempotent — re-run to upgrade.
+# Ship the broker to a remote host and (re)start it. Idempotent — re-run to upgrade.
 #
 # Only server/ and shared/ travel: the broker has no dependencies, so there is
 # no node_modules and no npm install on the far side. The MCP server stays on
@@ -7,9 +7,12 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-PROJECT="${GCP_CPU_PROJECT:-rnd-sumit-astha}"
-ZONE="${GCP_CPU_ZONE:-us-central1-a}"
-INSTANCE="${GCP_CPU_INSTANCE:-rnd-sumit-vm}"
+# Deployment target comes from deploy/target.env (gitignored) or the environment,
+# so no host identifiers live in this repo. See deploy/target.env.example.
+[ -f deploy/target.env ] && . deploy/target.env
+PROJECT="${GCP_PROJECT:?set GCP_PROJECT (see deploy/target.env.example)}"
+ZONE="${GCP_ZONE:-us-central1-a}"
+INSTANCE="${GCP_INSTANCE:?set GCP_INSTANCE (see deploy/target.env.example)}"
 TOKEN_FILE="${TOKEN_FILE:-$HOME/.agent-tunnel/broker-token}"
 
 ssh_vm() { gcloud compute ssh "$INSTANCE" --zone "$ZONE" --project "$PROJECT" --tunnel-through-iap --command "$1"; }

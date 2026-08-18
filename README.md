@@ -28,8 +28,8 @@ Nothing in the MCP server knows whether it is the local or the remote side.
 
 ## Connecting an agent
 
-The broker is already running on `rnd-sumit-vm`. Each machine needs three
-things: the code, the current broker URL, and the shared token.
+Each machine needs three things: the code, the current broker URL, and the
+shared token.
 
 ```bash
 git clone git@github.com:rockerritesh/ember-relay-58bc.git ~/agent-tunnel && cd ~/agent-tunnel && npm install
@@ -157,59 +157,51 @@ only path in. Agent and thread ids are validated against
 `^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$` before they are used as path segments, so a
 crafted id cannot escape the data folder.
 
-## Deploying to the GCP VM
+## Deploying the broker to a server
 
-Deployed and running on `rnd-sumit-vm` (`rnd-sumit-astha`, `us-central1-a`).
-The broker runs as a systemd service under a dedicated `agenttunnel` user,
-binding `127.0.0.1:8787` only; `cloudflared` dials *out* to Cloudflare, so no
-inbound firewall rule exists and the VM exposes no public port. Both units are
-enabled at boot.
+`deploy/install.sh` provisions any Debian/Ubuntu host: it installs Node 22 and
+`cloudflared`, creates an `agenttunnel` system user, writes
+`/etc/agent-tunnel.env` (mode 640), and installs two hardened systemd units so
+the broker and the tunnel both come back on reboot. Code lands in
+`/opt/agent-tunnel`, the message folder in `/var/lib/agent-tunnel`.
 
-Access to the VM is JIT, so start with a grant:
+The broker binds `127.0.0.1` only. `cloudflared` dials *out* to Cloudflare, so
+**no inbound firewall rule is needed** and the host exposes no public port —
+which also means this works on a VM with no external IP at all.
+
+For a GCP VM reached over IAP, name your target once:
 
 ```bash
-gcloud pam grants create --entitlement=project-developer --location=global --project=rnd-sumit-astha --requested-duration=14400s --justification="agent-tunnel deploy"
+cp deploy/target.env.example deploy/target.env
 ```
 
-A fresh grant takes 60–90s to propagate; `4033: 'not authorized'` on the first
-SSH means wait and retry, not that something is broken.
-
-Then deploy or upgrade:
+Fill in project, zone and instance — that file is gitignored, so host names stay
+out of the repo. Then deploy or upgrade:
 
 ```bash
 ./deploy/push.sh
 ```
 
-It uploads `server/` and `shared/`, installs Node 22 and `cloudflared` if
-missing, writes `/etc/agent-tunnel.env` (mode 640, `root:agenttunnel`), installs
-both systemd units, and prints the public URL. Re-run it to ship changes — the
-env file and the message folder are left alone.
+It uploads `server/` and `shared/`, runs the installer, and prints the public
+URL. Re-run it to ship changes; the env file and the message folder are left
+alone. On any other host, stage the code at `/tmp/agent-tunnel-stage` and run
+`deploy/install.sh` directly.
 
-The shared secret lives at `~/.agent-tunnel/broker-token` on this Mac and is
-generated on first deploy. Every agent uses the same token; agents are told
+The shared secret is generated on first deploy and kept at
+`~/.agent-tunnel/broker-token`. Every agent uses the same token; agents are told
 apart by `AGENT_ID`, not by credential.
 
-**On the VM:**
-
-| | |
-|---|---|
-| Code | `/opt/agent-tunnel` |
-| Message folder | `/var/lib/agent-tunnel` |
-| Secret | `/etc/agent-tunnel.env` |
-| Services | `agent-tunnel-broker`, `agent-tunnel-cloudflared` |
-| Current URL | `agent-tunnel-url` |
+Ask the running deployment for its current address:
 
 ```bash
 ./deploy/url.sh
 ```
 
 **The URL is not stable.** A quick tunnel picks a new hostname every time the
-cloudflared service restarts, which includes any VM reboot. When that happens,
-`./deploy/url.sh` and update `BROKER_URL` on each agent machine. To make it
-stable you need a named tunnel, which requires a Cloudflare account with a zone:
-run `cloudflared tunnel login` and `cloudflared tunnel create agent-tunnel` on
-the VM, then swap the `ExecStart` in `agent-tunnel-cloudflared.service` for
-`cloudflared tunnel run`.
+cloudflared service restarts, including any host reboot. When that happens,
+re-read it and update `BROKER_URL` on each agent machine. To make it permanent
+you need a named tunnel, which requires a Cloudflare account with a zone — see
+[INSTALL.md](INSTALL.md#stable-url-optional).
 
 ## Tests
 
