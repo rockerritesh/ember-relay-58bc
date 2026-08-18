@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "agent-tunnel": {
+      "command": "node",
+      "args": ["mcp/server.mjs"],
+      "env": {
+        "AGENT_ID": "alice",
+        "BROKER_URL": "http://127.0.0.1:8787"
+      }
+    }
+  }
+}

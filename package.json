@@ -1,0 +1,18 @@
+{
+  "name": "agent-tunnel",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Cross-machine agent-to-agent message broker: a shared message folder behind a small HTTP API, reachable over a Cloudflare tunnel.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "broker": "node server/broker.mjs",
+    "tunnel": "bash scripts/tunnel.sh",
+    "test": "node --test 'test/*.test.mjs'"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  }
+}

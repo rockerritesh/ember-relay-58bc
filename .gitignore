@@ -1,0 +1,7 @@
+node_modules/
+data/
+pending/
+*.log
+.env
+Conversation.md
+.tunnel-url
