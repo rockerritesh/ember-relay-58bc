@@ -232,3 +232,7 @@ Covers the store (status transitions, at-least-once redelivery, path-traversal
 rejection, offer state machine), the HTTP surface (every route, error codes,
 the token gate), the two-agent flow end to end, and the MCP server driven as a
 real subprocess over stdio.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
