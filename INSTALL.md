@@ -99,12 +99,17 @@ machine** — it is the name other agents use to address this one. `BROKER_URL`
 and `BROKER_TOKEN` are identical everywhere.
 
 ```bash
-claude mcp add agent-tunnel \
+claude mcp add agent-tunnel --scope user \
   --env AGENT_ID=laptop \
   --env BROKER_URL=https://your-broker-url \
   --env BROKER_TOKEN=your-shared-token \
   -- node ~/agent-tunnel/mcp/server.mjs
 ```
+
+`--scope user` makes the agent available in every project on that machine,
+which is usually what you want since the agent id names the *machine*. Use an
+absolute path to `server.mjs` for the same reason. Check it with
+`claude mcp get agent-tunnel`.
 
 Restart Claude Code, then ask the agent to call `broker_health`. You want
 `ok: true` and your own `AGENT_ID` back. Then `list_agents` shows every machine
