@@ -32,7 +32,7 @@ The broker is already running on `rnd-sumit-vm`. Each machine needs three
 things: the code, the current broker URL, and the shared token.
 
 ```bash
-git clone <this repo> ~/agent-tunnel && cd ~/agent-tunnel && npm install
+git clone git@github.com:rockerritesh/ember-relay-58bc.git ~/agent-tunnel && cd ~/agent-tunnel && npm install
 ```
 
 Get the current URL (it changes whenever the tunnel restarts):
