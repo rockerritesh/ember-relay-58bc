@@ -1,4 +1,4 @@
-# Installing agent-tunnel
+# Installing tincan
 
 Two agents on different machines talk through a shared message folder. One
 machine (or a server) runs the **broker**, which owns the folder and serves it
@@ -28,8 +28,8 @@ and only for the MCP SDK.
 Pick one machine to host it. Every agent will reach it there.
 
 ```bash
-git clone git@github.com:rockerritesh/ember-relay-58bc.git ~/agent-tunnel
-cd ~/agent-tunnel
+git clone git@github.com:rockerritesh/tincan.git ~/tincan
+cd ~/tincan
 npm install
 npm test
 ```
@@ -89,8 +89,8 @@ you do not need an inbound firewall rule.
 ## Part 2 — Install an agent (repeat per machine)
 
 ```bash
-git clone git@github.com:rockerritesh/ember-relay-58bc.git ~/agent-tunnel
-cd ~/agent-tunnel
+git clone git@github.com:rockerritesh/tincan.git ~/tincan
+cd ~/tincan
 npm install
 ```
 
@@ -99,17 +99,17 @@ machine** — it is the name other agents use to address this one. `BROKER_URL`
 and `BROKER_TOKEN` are identical everywhere.
 
 ```bash
-claude mcp add agent-tunnel --scope user \
+claude mcp add tincan --scope user \
   --env AGENT_ID=laptop \
   --env BROKER_URL=https://your-broker-url \
   --env BROKER_TOKEN=your-shared-token \
-  -- node ~/agent-tunnel/mcp/server.mjs
+  -- node ~/tincan/mcp/server.mjs
 ```
 
 `--scope user` makes the agent available in every project on that machine,
 which is usually what you want since the agent id names the *machine*. Use an
 absolute path to `server.mjs` for the same reason. Check it with
-`claude mcp get agent-tunnel`.
+`claude mcp get tincan`.
 
 Restart Claude Code, then ask the agent to call `broker_health`. You want
 `ok: true` and your own `AGENT_ID` back. Then `list_agents` shows every machine
@@ -240,7 +240,7 @@ agent-tunnel-url
 Agent machine:
 
 ```bash
-claude mcp remove agent-tunnel && rm -rf ~/agent-tunnel ~/.agent-tunnel
+claude mcp remove tincan && rm -rf ~/tincan ~/.agent-tunnel
 ```
 
 Broker host running as a service:

@@ -1,24 +1,42 @@
-# agent-tunnel
+# tincan
 
-Two agents on two machines, talking through a shared message folder.
+**A private line between your agent and your friend's agent.**
 
-One machine runs a small HTTP broker over a real folder on disk. A Cloudflare
-tunnel gives that broker a public URL. Each machine runs an identical MCP
-server that turns the folder into agent tools: send a message, check the inbox,
-acknowledge, read the thread history.
+Two tin cans and a string. Your Claude Code agent talks directly to theirs — send
+a message, get a read receipt, hand over a file — across machines, over a tunnel
+you own.
+
+- **Agent to agent, not human to human.** Neither of you has to relay anything.
+  Your agent addresses theirs by name and gets an answer.
+- **No Slack, no shared channel, no third party.** One small broker on a machine
+  you control. Messages are files in a folder you can `cat`.
+- **No context loss.** Every thread is an append-only log — every send, delivery,
+  read receipt and transfer, in order, forever. An agent joining late reads the
+  whole history instead of guessing.
+- **Instant, and it waits when it has to.** Delivery is at-least-once. Message an
+  agent that is not online yet and it lands the moment they connect.
+- **Files too, not just text.** Anything over 64KB is offered first and only
+  crosses the wire once the other side accepts.
+
+**New here? See [INSTALL.md](INSTALL.md).**
 
 ```
-Machine 1 (Mac)                          Machine 2
-┌──────────────────────┐                 ┌──────────────────────┐
-│ Agent A              │                 │ Agent B              │
-│   └ agent-tunnel MCP ─┐                │   └ agent-tunnel MCP ─┐
-└──────────────────────│┘                └──────────────────────│┘
-                       │ localhost                              │ https
-                       ▼                                        │
-             ┌───────────────────┐      ┌──────────────┐        │
-             │ broker :8787      │◄─────│ cloudflared  │◄───────┘
-             │   data/ folder    │      └──────────────┘
-             └───────────────────┘
+   your machine                              their machine
+┌────────────────────┐                    ┌────────────────────┐
+│ your agent         │                    │ their agent        │
+│   └ tincan MCP ──┐ │                    │ ┌── tincan MCP     │
+└──────────────────│─┘                    └─│──────────────────┘
+                   │ https                    │ https
+                   ▼                          ▼
+              ┌─────────────────────────────────────┐
+              │        Cloudflare edge              │
+              └──────────────────▲──────────────────┘
+                                 │ dials OUT — no inbound port
+              ┌──────────────────┴──────────────────┐
+              │ broker host                         │
+              │   cloudflared → broker :8787        │
+              │                      └→ message folder
+              └─────────────────────────────────────┘
 ```
 
 Nothing in the MCP server knows whether it is the local or the remote side.
@@ -32,7 +50,7 @@ Each machine needs three things: the code, the current broker URL, and the
 shared token.
 
 ```bash
-git clone git@github.com:rockerritesh/ember-relay-58bc.git ~/agent-tunnel && cd ~/agent-tunnel && npm install
+git clone git@github.com:rockerritesh/tincan.git ~/tincan && cd ~/tincan && npm install
 ```
 
 Get the current URL (it changes whenever the tunnel restarts):
@@ -45,7 +63,7 @@ Register the MCP server. **`AGENT_ID` is the per-machine name** — pick a
 different one on every machine; the token is the same everywhere.
 
 ```bash
-claude mcp add agent-tunnel --env AGENT_ID=laptop --env BROKER_URL=https://<current>.trycloudflare.com --env BROKER_TOKEN=<shared-token> -- node ~/agent-tunnel/mcp/server.mjs
+claude mcp add tincan --env AGENT_ID=laptop --env BROKER_URL=https://<current>.trycloudflare.com --env BROKER_TOKEN=<shared-token> -- node ~/tincan/mcp/server.mjs
 ```
 
 Confirm with `broker_health`, then `list_agents` — every agent that has made a

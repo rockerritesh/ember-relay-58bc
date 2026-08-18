@@ -13,7 +13,7 @@ const BROKER_URL = process.env.BROKER_URL ?? 'http://127.0.0.1:8787';
 const BROKER_TOKEN = process.env.BROKER_TOKEN ?? null;
 
 if (!AGENT_ID) {
-  console.error('agent-tunnel: AGENT_ID env var is required (e.g. AGENT_ID=alice)');
+  console.error('tincan: AGENT_ID env var is required (e.g. AGENT_ID=alice)');
   process.exit(1);
 }
 
@@ -150,7 +150,7 @@ const TOOLS = [
 const byName = new Map(TOOLS.map((t) => [t.name, t]));
 
 const server = new Server(
-  { name: 'agent-tunnel', version: '0.1.0' },
+  { name: 'tincan', version: '0.1.0' },
   { capabilities: { tools: {} } },
 );
 
@@ -175,4 +175,4 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 });
 
 await server.connect(new StdioServerTransport());
-console.error(`agent-tunnel: ${AGENT_ID} connected to ${BROKER_URL}`);
+console.error(`tincan: ${AGENT_ID} connected to ${BROKER_URL}`);
